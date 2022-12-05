@@ -1,0 +1,16 @@
+.mat-toolbar {
+  white-space: initial;
+  height: auto;
+  flex-direction: column;
+  font-size: 65%;
+  line-height: normal;
+  align-items: stretch;
+
+  h5 {
+    text-align: center;
+  }
+
+  p {
+    text-align: start;
+  }
+}

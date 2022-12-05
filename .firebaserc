@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "quadrato-ufficiali": {
+      "hosting": {
+        "quadrato-ufficiali-2": [
+          "quadrato-ufficiali"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "quadrato-ufficiali"
+  }
+}

@@ -28,6 +28,8 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/animate.css/animate.min.css",
+              "src/my-theme.scss",
               "src/styles.scss"
             ],
             "scripts": []
@@ -99,6 +101,16 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "quadrato-ufficiali-2:build:production",
+            "firebaseProject": "quadrato-ufficiali",
+            "firebaseHostingSite": "quadrato-ufficiali"
           }
         }
       }

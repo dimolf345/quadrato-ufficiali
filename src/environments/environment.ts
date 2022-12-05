@@ -3,7 +3,25 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  firebase: {
+    projectId: 'quadrato-ufficiali',
+    appId: '1:758440980964:web:304b68f57e8a6e8e3697f1',
+    storageBucket: 'quadrato-ufficiali.appspot.com',
+    apiKey: 'AIzaSyD8VMHIU42W46OpVwtK2gWMYe3v8FvF3Yw',
+    authDomain: 'quadrato-ufficiali.firebaseapp.com',
+    messagingSenderId: '758440980964',
+    measurementId: 'G-8TTE33HXZ5',
+  },
+  production: false,
+  firebaseConfig: {
+    apiKey: 'AIzaSyD8VMHIU42W46OpVwtK2gWMYe3v8FvF3Yw',
+    authDomain: 'quadrato-ufficiali.firebaseapp.com',
+    projectId: 'quadrato-ufficiali',
+    storageBucket: 'quadrato-ufficiali.appspot.com',
+    messagingSenderId: '758440980964',
+    appId: '1:758440980964:web:304b68f57e8a6e8e3697f1',
+    measurementId: 'G-8TTE33HXZ5',
+  },
 };
 
 /*

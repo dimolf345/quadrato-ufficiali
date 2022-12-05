@@ -1,0 +1,47 @@
+.background {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  z-index: -99;
+  filter: opacity(0.75) blur(2px);
+  max-width: 1600px;
+}
+
+.home {
+  &__title {
+    font-family: "Dancing Script", cursive;
+    text-align: center;
+    color: var(--text-primary-darker-color);
+  }
+}
+
+@media screen and (min-width: 599px) {
+  .background {
+    background: url("../../../assets/background-desktop.jpg");
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .home {
+    &__title {
+      margin-top: 30px;
+      color: var(--accent-darker-color);
+    }
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .background {
+    background: url("../../../assets/background-mobile.jpg");
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .home {
+    &__title {
+    }
+  }
+}
