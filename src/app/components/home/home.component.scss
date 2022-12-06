@@ -6,7 +6,7 @@
   height: 100%;
   width: 100%;
   z-index: -99;
-  filter: opacity(0.75) blur(2px);
+  filter: opacity(0.75) blur(1px);
   max-width: 1600px;
 }
 
@@ -15,6 +15,16 @@
     font-family: "Dancing Script", cursive;
     text-align: center;
     color: var(--text-primary-darker-color);
+  }
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    text-transform: uppercase;
+    margin-bottom: 10px;
   }
 }
 
