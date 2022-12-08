@@ -1,0 +1,36 @@
+<div class="background"></div>
+<mat-card>
+  <mat-card-title>Entra nel portale</mat-card-title>
+  <form class="login" #loginForm="ngForm">
+    <mat-card-content>
+      <!-- Email -->
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          name="email"
+          appearance="outline"
+          matInput
+          type="text"
+          placeholder="indirizzo email marina"
+          ngModel
+        />
+        <mat-hint>Inserire l'indirizzo email istituzionale</mat-hint>
+      </mat-form-field>
+      <!-- Password -->
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          name="password"
+          appearance="outline"
+          matInput
+          type="password"
+          placeholder="Password"
+          ngModel
+        />
+      </mat-form-field>
+      <button color="accent" class="login__button" mat-raised-button>
+        Entra
+      </button>
+    </mat-card-content>
+  </form>
+</mat-card>

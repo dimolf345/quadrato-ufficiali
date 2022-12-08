@@ -23,9 +23,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent, FooterComponent],
+  declarations: [AppComponent, HeaderComponent, HomeComponent, FooterComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

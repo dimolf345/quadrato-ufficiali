@@ -1,3 +1,26 @@
+.login {
+  .mat-form-field {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  &__button {
+    width: 100%;
+    text-transform: uppercase;
+  }
+}
+
+mat-card {
+  width: 80vw;
+  max-width: 350px;
+  margin: 20px auto;
+}
+
+mat-card-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .background {
   position: absolute;
   left: 50%;
@@ -8,24 +31,6 @@
   z-index: -99;
   filter: opacity(0.75) blur(1px);
   max-width: 1600px;
-}
-
-.home {
-  &__title {
-    font-family: "Dancing Script", cursive;
-    text-align: center;
-    color: var(--text-primary-darker-color);
-  }
-}
-
-.login-card {
-  display: flex;
-  flex-direction: column;
-
-  &__button {
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
 }
 
 @media screen and (min-width: 599px) {
@@ -48,10 +53,5 @@
     background: url("../../../assets/background-mobile.jpg");
     background-size: cover;
     background-position: center center;
-  }
-
-  .home {
-    &__title {
-    }
   }
 }
