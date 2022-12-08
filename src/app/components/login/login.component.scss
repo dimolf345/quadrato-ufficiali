@@ -7,6 +7,28 @@
   &__button {
     width: 100%;
     text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  &__info {
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 14px;
+      position: relative;
+    }
+    
+    mat-icon {
+      position: absolute;
+      scale: 0.7;
+    }
+  }
+
+  &__description {
+    width: 100%;
+    font-size: 12px;
+    line-height: 1.1;
+    text-align: justify;
   }
 }
 

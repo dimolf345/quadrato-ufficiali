@@ -1,7 +1,22 @@
 <div class="background"></div>
 <mat-card>
-  <mat-card-title>Entra nel portale</mat-card-title>
-  <form class="login" #loginForm="ngForm">
+  <mat-card-title>Registrati al portale</mat-card-title>
+  <div class="signup__info">
+    <h3>
+      Come funziona
+      <mat-icon color="warn">help</mat-icon>
+    </h3>
+  </div>
+  <p class="signup__description">
+    Per poterti registrare al portale
+    <strong>
+      un direttore di quadrato deve averti aggiunto tra gli ufficiali
+      contribuenti.</strong
+    >
+    Inserisci il tuo indirizzo istituzionale nel campo email per verificare la
+    possibilità di registrarti al portale.
+  </p>
+  <form class="signup" #loginForm="ngForm" aria-label="Registrati">
     <mat-card-content>
       <!-- Email -->
       <mat-form-field appearance="outline">
@@ -19,6 +34,9 @@
         <mat-error *ngIf="!email.value">Il campo email è vuoto</mat-error>
         <mat-hint>Inserire l'indirizzo email istituzionale</mat-hint>
       </mat-form-field>
+      <button color="accent" class="signup__button" mat-raised-button>
+        Verifica email
+      </button>
       <!-- Password -->
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
@@ -35,25 +53,6 @@
         />
         <mat-error *ngIf="!password.value">Il campo password è vuoto</mat-error>
       </mat-form-field>
-      <button
-        [disabled]="!loginForm.valid"
-        color="accent"
-        class="login__button"
-        mat-raised-button
-      >
-        Entra
-      </button>
-      <div class="login__info">
-        <h3>
-          Come funziona l'autenticazione sul portale
-          <mat-icon color="warn">help</mat-icon>
-        </h3>
-      </div>
-      <p class="login__description">
-        Tutti gli ufficiali che sono stati inseriti come contribuenti da un
-        direttore di quadrato possono registrarsi con il proprio indirizzo
-        istituzionale dalla pagina di registrazione.
-      </p>
     </mat-card-content>
   </form>
 </mat-card>
