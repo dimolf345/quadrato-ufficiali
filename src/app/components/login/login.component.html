@@ -1,7 +1,7 @@
 <div class="background"></div>
 <mat-card>
   <mat-card-title>Entra nel portale</mat-card-title>
-  <form class="login" #loginForm="ngForm">
+  <form class="login" #loginForm="ngForm" (ngSubmit)="onSubmit()">
     <mat-card-content>
       <!-- Email -->
       <mat-form-field appearance="outline">
@@ -36,12 +36,17 @@
         <mat-error *ngIf="!password.value">Il campo password è vuoto</mat-error>
       </mat-form-field>
       <button
-        [disabled]="!loginForm.valid"
+        [disabled]="!loginForm.valid || (loading$ | async)"
         color="accent"
         class="login__button"
         mat-raised-button
       >
-        Entra
+        <span *ngIf="!(loading$ | async)">Entra</span>
+        <mat-spinner
+          *ngIf="loading$ | async"
+          diameter="24"
+          color="warn"
+        ></mat-spinner>
       </button>
       <div class="login__info">
         <h3>
