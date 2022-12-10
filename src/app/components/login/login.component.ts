@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { startLoading, stopLoading } from 'src/app/store/ui/ui.actions';
 import { UIState } from 'src/app/store/ui/ui.reducers';
 import { AuthService } from '../../services/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {
-    this.AuthService.login();
+  onSubmit(form: NgForm) {
+    const { email, password } = form.value;
+    this.AuthService.login(email, password);
   }
 }

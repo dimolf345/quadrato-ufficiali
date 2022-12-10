@@ -22,6 +22,7 @@ import { SignupComponent } from './components/signup/signup.component';
 // Firebase - Firestore
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 //NgRx
 import { reducers } from './store/reducers';
@@ -43,6 +44,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserAnimationsModule,
     SharedModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
     StoreModule.forRoot(reducers),
     AngularFireAuthModule,
     StoreDevtoolsModule.instrument({
