@@ -3,6 +3,7 @@ import { Observable, map, pipe } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { startLoading, stopLoading } from 'src/app/store/ui/ui.actions';
 import { UIState } from 'src/app/store/ui/ui.reducers';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,10 @@ import { UIState } from 'src/app/store/ui/ui.reducers';
 export class LoginComponent implements OnInit {
   loading$: Observable<boolean> = new Observable();
 
-  constructor(private store: Store<{ ui: UIState }>) {
+  constructor(
+    private store: Store<{ ui: UIState }>,
+    private AuthService: AuthService
+  ) {
     this.loading$ = this.store
       .select('ui')
       .pipe(map((state: UIState) => state.isLoading));
@@ -21,9 +25,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    this.store.dispatch(startLoading());
-    setTimeout(() => {
-      this.store.dispatch(stopLoading());
-    }, 5000);
+    this.AuthService.login();
   }
 }

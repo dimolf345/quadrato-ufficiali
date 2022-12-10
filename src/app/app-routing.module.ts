@@ -17,6 +17,11 @@ const routes: Routes = [
     path: 'signup',
     component: SignupComponent,
   },
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./modules/core/core.module').then((m) => m.CoreModule),
+  },
 ];
 
 @NgModule({
