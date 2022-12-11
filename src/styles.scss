@@ -28,3 +28,12 @@ body {
 .text-center {
   text-align: center !important;
 }
+
+
+.snackbar {
+  &__error {
+    background-color: var(--warn-color);
+    color: white;
+    font-weight: bold;
+  }
+}

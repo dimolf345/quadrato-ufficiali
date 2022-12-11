@@ -1,11 +1,12 @@
 .header {
-  text-transform: uppercase;
   letter-spacing: large;
   justify-content: center;
+  position: relative;
 }
 
 
 .logo {
+  text-transform: uppercase;
   color: inherit;
   text-decoration: none;
   transition: transform ease .25s;
@@ -15,4 +16,31 @@
     transform: scale(1.1);
     font-weight: bold;
   }
+}
+
+@media screen and (max-width: 599px) {
+  .header {
+    min-height: 56px;
+    height: auto;
+    padding: 10px;
+
+    &__user {
+      text-align: center;
+    }
+  }
+
+}
+
+
+
+@media  screen and (min-width: 599px) {
+  .header {
+    &__user {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  
 }

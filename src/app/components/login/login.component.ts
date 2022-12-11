@@ -13,6 +13,7 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loading$: Observable<boolean> = new Observable();
+  errorMsg: Promise<string> | null = null;
 
   constructor(
     private store: Store<{ ui: UIState }>,
@@ -26,7 +27,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
+    this.errorMsg = null;
     const { email, password } = form.value;
-    this.AuthService.login(email, password);
+    form.resetForm();
+    const error = this.AuthService.login(email, password);
+    if (error) this.errorMsg = error;
   }
 }

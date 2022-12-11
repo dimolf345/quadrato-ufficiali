@@ -1,5 +1,10 @@
 <mat-toolbar color="accent" [class.mat-elevation-z8]="true" class="header">
   <header>
     <a class="logo" routerLink="">Nave Martinengo - F596</a>
+    <p *ngIf="currentUser" class="header__user">
+      {{
+        currentUser.grado + " " + currentUser.nome + " " + currentUser.cognome
+      }}
+    </p>
   </header>
 </mat-toolbar>

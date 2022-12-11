@@ -5,6 +5,7 @@ import { UIState } from '../store/ui/ui.reducers';
 import { startLoading } from '../store/ui/ui.actions';
 import { UserService } from './user.service';
 import { stopLoading } from 'src/app/store/ui/ui.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +13,20 @@ import { stopLoading } from 'src/app/store/ui/ui.actions';
 export class AuthService {
   constructor(
     private auth: AngularFireAuth,
-    private ui: Store<UIState>,
-    private user: UserService
+    private ui: Store<{ ui: UIState }>,
+    private user: UserService,
+    private snackbar: MatSnackBar
   ) {}
 
-  async login(email: string, password: string) {
+  async verifyEmail(email: string): Promise<any> {
     this.ui.dispatch(startLoading());
+    const result = await this.user.searchUserByEmail(email);
+    if (result) return true;
+    return false;
+  }
 
+  async login(email: string, password: string): Promise<string> {
+    this.ui.dispatch(startLoading());
     try {
       const response = await this.auth.signInWithEmailAndPassword(
         email,
@@ -27,11 +35,19 @@ export class AuthService {
       if (response.user) {
         await this.user.getUserFromEmail(email);
       }
-      this.ui.dispatch(stopLoading());
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log(error.message);
+        this.snackbar.open(error.message, '', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          panelClass: ['snackbar__error'],
+        });
+        return error.message;
       }
+    } finally {
+      this.ui.dispatch(stopLoading());
     }
+    return '';
   }
 }

@@ -4,6 +4,11 @@
     margin-bottom: 20px;
   }
 
+  &__error {
+    color: var(--warn-color);
+    font-weight: bold;
+  }
+
   &__button {
     width: 100%;
     text-transform: uppercase;

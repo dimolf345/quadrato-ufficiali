@@ -26,33 +26,62 @@
           appearance="outline"
           matInput
           type="email"
-          placeholder="indirizzo email marina"
+          placeholder="Email istituzionale"
           ngModel
           required
           #email
+          [disabled]="canRegister"
         />
         <mat-error *ngIf="!email.value">Il campo email è vuoto</mat-error>
         <mat-hint>Inserire l'indirizzo email istituzionale</mat-hint>
       </mat-form-field>
-      <button color="accent" class="signup__button" mat-raised-button>
+      <button
+        type="button"
+        color="accent"
+        class="signup__button"
+        mat-raised-button
+        (click)="verifyEmail(email)"
+      >
         Verifica email
       </button>
-      <!-- Password -->
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input
-          name="password"
-          appearance="outline"
-          matInput
-          type="password"
-          placeholder="Password"
-          ngModel
-          required
-          #password
-          minlength="8"
-        />
-        <mat-error *ngIf="!password.value">Il campo password è vuoto</mat-error>
-      </mat-form-field>
+      <div *ngIf="canRegister">
+        <!-- Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            name="password"
+            appearance="outline"
+            matInput
+            type="password"
+            placeholder="Password"
+            ngModel
+            required
+            #password
+            minlength="8"
+          />
+          <mat-error *ngIf="!password.value"
+            >Il campo password è vuoto</mat-error
+          >
+        </mat-form-field>
+        <!-- Confirm password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Conferma Password</mat-label>
+          <input
+            name="confirm_password"
+            appearance="outline"
+            matInput
+            type="password"
+            placeholder="Conferma Password"
+            ngModel
+            required
+            #confirm_password
+            minlength="8"
+          />
+          <mat-error *ngIf="!password.value"
+            >Il campo password è vuoto</mat-error
+          >
+        </mat-form-field>
+      </div>
     </mat-card-content>
   </form>
 </mat-card>

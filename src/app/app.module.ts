@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //services
 import { AuthService } from './services/auth.service';
+import { SnackbarService } from './services/snackbar.service';
 
 // Components
 import { HeaderComponent } from './components/header/header.component';
@@ -51,7 +52,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       maxAge: 25,
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, SnackbarService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
