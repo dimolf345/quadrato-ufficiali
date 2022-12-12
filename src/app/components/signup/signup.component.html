@@ -16,7 +16,7 @@
     Inserisci il tuo indirizzo istituzionale nel campo email per verificare la
     possibilità di registrarti al portale.
   </p>
-  <form class="signup" #loginForm="ngForm" aria-label="Registrati">
+  <form class="signup" #signupForm="ngForm" aria-label="Registrati">
     <mat-card-content>
       <!-- Email -->
       <mat-form-field appearance="outline">
@@ -36,13 +36,19 @@
         <mat-hint>Inserire l'indirizzo email istituzionale</mat-hint>
       </mat-form-field>
       <button
+        *ngIf="!canRegister"
         type="button"
         color="accent"
         class="signup__button"
         mat-raised-button
         (click)="verifyEmail(email)"
       >
-        Verifica email
+        <span *ngIf="!(loading$ | async)">Verifica email</span>
+        <mat-spinner
+          *ngIf="loading$ | async"
+          diameter="24"
+          color="warn"
+        ></mat-spinner>
       </button>
       <div *ngIf="canRegister">
         <!-- Password -->
@@ -77,10 +83,33 @@
             #confirm_password
             minlength="8"
           />
-          <mat-error *ngIf="!password.value"
-            >Il campo password è vuoto</mat-error
+          <mat-error *ngIf="!confirm_password.value"
+            >Il campo conferma password è vuoto</mat-error
           >
         </mat-form-field>
+        <button
+          type="button"
+          color="accent"
+          class="signup__button"
+          mat-raised-button
+          (click)="canRegister = false"
+        >
+          Reset
+        </button>
+        <button
+          type="button"
+          color="accent"
+          class="signup__button"
+          mat-raised-button
+          (click)="onSubmit(signupForm)"
+          [disabled]="
+            !signupForm.valid ||
+            (loading$ | async) ||
+            password.value !== confirm_password.value
+          "
+        >
+          Registrati
+        </button>
       </div>
     </mat-card-content>
   </form>

@@ -35,6 +35,9 @@
             color: var(--warn-color)
         }
     }
+     mat-spinner {
+      display: inline-block;
+    }
 }
 
 mat-card {
