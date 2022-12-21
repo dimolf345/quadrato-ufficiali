@@ -1,10 +1,19 @@
 <mat-toolbar color="accent" [class.mat-elevation-z8]="true" class="header">
-  <header>
+  <header class="header">
     <a class="logo" routerLink="">Nave Martinengo - F596</a>
-    <p *ngIf="currentUser" class="header__user">
-      {{
-        currentUser.grado + " " + currentUser.nome + " " + currentUser.cognome
-      }}
-    </p>
+    <div class="header__user" *ngIf="currentOfficer">
+      <p>
+        {{
+          currentOfficer.grado +
+            " " +
+            currentOfficer.nome +
+            " " +
+            currentOfficer.cognome
+        }}
+      </p>
+      <button mat-button type="button" title="Logout" (click)="onLogout()">
+        <mat-icon title="Logout">logout</mat-icon>
+      </button>
+    </div>
   </header>
 </mat-toolbar>

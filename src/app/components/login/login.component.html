@@ -12,11 +12,15 @@
           matInput
           type="email"
           placeholder="indirizzo email marina"
-          ngModel
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
           required
-          #email
+          ngModel
+          #email="ngModel"
         />
         <mat-error *ngIf="!email.value">Il campo email è vuoto</mat-error>
+        <mat-error *ngIf="email.control.status === 'INVALID'"
+          >L'email inserita non è valida</mat-error
+        >
         <mat-hint>Inserire l'indirizzo email istituzionale</mat-hint>
       </mat-form-field>
       <!-- Password -->
@@ -48,7 +52,7 @@
           color="warn"
         ></mat-spinner>
       </button>
-      <p *ngIf="errorMsg" class="login__error">{{ errorMsg | async }}</p>
+      <p *ngIf="errorMsg" class="login__error">{{ errorMsg }}</p>
       <div class="login__info">
         <h3>
           Come funziona l'autenticazione sul portale

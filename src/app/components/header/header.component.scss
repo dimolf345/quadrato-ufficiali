@@ -1,10 +1,3 @@
-.header {
-  letter-spacing: large;
-  justify-content: center;
-  position: relative;
-}
-
-
 .logo {
   text-transform: uppercase;
   color: inherit;
@@ -18,14 +11,34 @@
   }
 }
 
+.header {
+  &__user {
+      button {
+          min-width: auto;
+          line-height: initial;
+          padding: 0;
+        }
+  }
+} 
+
 @media screen and (max-width: 599px) {
   .header {
     min-height: 56px;
     height: auto;
-    padding: 10px;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+
 
     &__user {
       text-align: center;
+      display: flex;
+      
+      p {
+        flex-grow: 1;
+      }
+
+
     }
   }
 
@@ -34,12 +47,22 @@
 
 
 @media  screen and (min-width: 599px) {
+  mat-toolbar {
+    position: relative;
+  }
+
   .header {
+    display: flex;
+    justify-content: center;
+
     &__user {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
+     position: absolute;
+    display: flex;
+     right: 10px;
+
+     button {
+      margin-left: 10px;
+     }
     }
   }
   

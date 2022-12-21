@@ -1,7 +1,7 @@
 import { UIReducer } from './ui/ui.reducers';
-import { userReducer } from './user/users.reducers';
+import { OfficersReducer } from './officers/officers.reducers';
 
 export const reducers = {
   ui: UIReducer,
-  user: userReducer,
+  officers: OfficersReducer,
 };

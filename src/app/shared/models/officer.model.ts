@@ -1,4 +1,4 @@
-export interface User {
+export interface Officer {
   id?: string;
   attivo: boolean;
   cognome: string;
@@ -6,5 +6,6 @@ export interface User {
   ddq: boolean;
   email: string;
   grado: string;
+  data_imbarco: Date;
   pt: string;
 }

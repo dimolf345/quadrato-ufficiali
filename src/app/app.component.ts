@@ -1,4 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,6 @@ import { Component, HostBinding } from '@angular/core';
 })
 export class AppComponent {
   @HostBinding('className') appClass: string = 'app';
+
+  constructor() {}
 }
