@@ -11,14 +11,14 @@ export class SnackbarService {
 
   defaultSnackBar(
     message: string,
-    isError: boolean = false,
+    theme: 'error' | 'standard' = 'standard',
     duration: number = 3000
   ) {
     this.snackbar.open(message, '', {
       duration,
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      panelClass: isError ? ['snackbar__error'] : [],
+      panelClass: theme === 'error' ? ['snackbar__error'] : [],
     });
   }
 }

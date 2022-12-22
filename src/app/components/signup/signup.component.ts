@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
       if (!result) {
         this.snackbar.defaultSnackBar(
           `L'indirizzo email ${emailInput.value} non è presente all'interno del DB. Contattare il direttore di quadrato.`,
-          true
+          'error'
         );
         return;
       } else {
@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
       }
     } catch (error) {
       if (error instanceof Error) {
-        this.snackbar.defaultSnackBar(error.message, true);
+        this.snackbar.defaultSnackBar(error.message, 'error');
       }
     } finally {
       this.store.dispatch(stopLoading());
