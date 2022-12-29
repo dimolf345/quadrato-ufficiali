@@ -9,9 +9,10 @@ import {
   AngularFirestore,
   AngularFirestoreModule,
 } from '@angular/fire/compat/firestore';
+import { CustomAsyncPipe } from 'src/app/pipes/custom-async.pipe';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, CustomAsyncPipe],
   imports: [CommonModule, CoreRoutingModule, MaterialModule],
   exports: [MaterialModule],
   providers: [AccountService],

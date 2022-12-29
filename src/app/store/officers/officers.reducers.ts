@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { createReducer, on, createSelector } from '@ngrx/store';
 import * as fromUser from './officers.actions';
 import { Officer } from '../../shared/models/officer.model';
 

@@ -29,10 +29,11 @@ export class MovementsService {
       .pipe(
         take(1),
         map((movementsArr: Movement[]) =>
-          movementsArr.map(async (mov: Movement) => {
-            const officer = await this.officerService.getOfficerByReference(
+          movementsArr.map((mov: Movement) => {
+            const officer = this.officerService.getOfficerByReference(
               mov.effettuato_da as DocumentReference
             );
+
             return {
               ...mov,
               data_pagamento: mov.data_pagamento.toDate(),

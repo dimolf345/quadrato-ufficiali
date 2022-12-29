@@ -37,13 +37,12 @@ export class OfficerService {
     }
   }
 
-  async getOfficerByReference(
+  getOfficerByReference(
     reference: DocumentReference
-  ): Promise<DocumentData | undefined> {
+  ): Promise<DocumentData | undefined> | undefined {
     let officer;
     try {
-      const temp = await reference.get();
-      officer = temp.data();
+      officer = reference.get().then((value) => value.data());
     } catch (error) {
       if (error instanceof Error) {
         this.snackbar.defaultSnackBar(error.message, 'error');
