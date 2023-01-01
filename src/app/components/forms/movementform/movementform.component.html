@@ -1,1 +1,61 @@
-<p>movementform works!</p>
+<form
+  class="new-movement"
+  aria-label="aggiungi movimento"
+  [formGroup]="movementForm || null"
+>
+  <h3 class="new-movement__title" class="text-center">Aggiungi movimento</h3>
+  <mat-divider style="margin: 10px 0"></mat-divider>
+  <div class="new-movement__row">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Categoria</mat-label>
+      <mat-select formControlName="categoria">
+        <mat-option *ngFor="let category of categories" value="category">
+          {{ category | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Data movimento</mat-label>
+      <input matInput [matDatepicker]="picker" [max]="maxDate" />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        class="new-movement__date"
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Importo</mat-label>
+      <input
+        currencyMask
+        [options]="{ prefix: '€' }"
+        matInput
+        type="text"
+        name="importo"
+      />
+    </mat-form-field>
+  </div>
+  <div class="new-movement__row">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Effettuato da</mat-label>
+      <mat-select formControlName="categoria" name="effettuato_da">
+        <mat-option
+          *ngFor="let officer of officers | async"
+          [value]="officer.id_ufficiale"
+        >
+          {{ officer | officerName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Descrizione</mat-label>
+      <input matInput type="text" name="descrizione" />
+    </mat-form-field>
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Note</mat-label>
+    <input matInput type="text" name="note" />
+  </mat-form-field>
+  <button mat-raised-button color="accent">Aggiungi Movimento</button>
+</form>

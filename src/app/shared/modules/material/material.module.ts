@@ -10,6 +10,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CustomDateAdapter } from './customDateAdapter';
 
 @NgModule({
   declarations: [],
@@ -25,6 +31,17 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSnackBarModule,
     MatTableModule,
     MatDialogModule,
+    MatDividerModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
+    {
+      provide: DateAdapter,
+      useClass: CustomDateAdapter,
+    },
   ],
   exports: [
     MatToolbarModule,
@@ -37,6 +54,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSnackBarModule,
     MatTableModule,
     MatDialogModule,
+    MatDividerModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
 })
 export class MaterialModule {}

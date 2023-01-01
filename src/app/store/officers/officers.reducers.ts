@@ -39,3 +39,8 @@ export const getIsAdmin = createSelector(
   officerState,
   (s) => s.currentOfficer?.ddq
 );
+
+export const getAvailableOfficers = createSelector(
+  officerState,
+  (s) => s.officers
+);

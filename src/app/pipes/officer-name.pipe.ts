@@ -6,7 +6,7 @@ import { Officer } from '../shared/models/officer.model';
 })
 export class OfficerNamePipe implements PipeTransform {
   transform(value: Officer | null) {
-    if (value) return `${value.grado} ${value.nome} ${value.cognome}`;
+    if (value) return `${value.grado || ''} ${value.nome} ${value.cognome}`;
     else return;
   }
 }

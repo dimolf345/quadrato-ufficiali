@@ -49,6 +49,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onClick() {
-    this.dialog.open(MovementformComponent);
+    this.dialog.open(MovementformComponent, {
+      maxWidth: '98vw',
+      minWidth: '40vw',
+    });
   }
 }
