@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccountService } from '../../services/account.service';
-import { map, Observable, Subscription, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Account } from 'src/app/shared/models/account.model';
 import { MovementsService } from '../../services/movements.service';
 import { Movement } from '../../shared/models/movement.model';
-import { DocumentData } from '@angular/fire/compat/firestore';
+import { Store } from '@ngrx/store';
+import { getIsAdmin } from 'src/app/store/officers/officers.reducers';
+import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  isAdmin: any = false;
   currentAccount: Account | undefined = undefined;
   accountSub: Subscription = new Subscription();
-  movements: Observable<Movement[]> = new Observable();
+  movements: Observable<Movement[] | any> = new Observable();
+  movements2: BehaviorSubject<Movement[] | any> = new BehaviorSubject(null);
   displayedColumns = [
     'data_pagamento',
     'descrizione',
@@ -24,7 +28,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private movementsService: MovementsService
+    private movementsService: MovementsService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +37,14 @@ export class DashboardComponent implements OnInit {
       (x) => (this.currentAccount = x)
     );
     this.movements = this.movementsService.movements;
-    this.movements.subscribe((mov: any) => console.log(Promise.resolve(mov)));
+    this.isAdmin = this.store.select(getIsAdmin);
+  }
+
+  ngOnDestroy(): void {
+    this.accountSub.unsubscribe();
+  }
+
+  onClick() {
+    this.movementsService.addMovement();
   }
 }

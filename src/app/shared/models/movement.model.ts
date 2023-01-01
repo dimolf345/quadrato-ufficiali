@@ -1,7 +1,4 @@
-import {
-  DocumentData,
-  DocumentReference,
-} from '@angular/fire/compat/firestore';
+import { DocumentReference } from '@angular/fire/compat/firestore';
 import { Officer } from './officer.model';
 import * as admin from 'firebase-admin';
 
@@ -15,10 +12,10 @@ export interface Movement {
     | 'birre'
     | 'amari'
     | 'altro';
-  creato_il: admin.firestore.Timestamp;
-  data_pagamento: admin.firestore.Timestamp;
+  creato_il: admin.firestore.Timestamp | Date;
+  data_pagamento: admin.firestore.Timestamp | Date;
   descrizione: string;
-  effettuato_da: DocumentReference<Officer> | Promise<DocumentData | undefined>;
+  effettuato_da: DocumentReference<Officer>;
   importo: number;
   note: string;
 }

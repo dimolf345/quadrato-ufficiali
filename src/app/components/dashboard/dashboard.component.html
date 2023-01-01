@@ -31,11 +31,11 @@
       </a>
     </mat-card>
   </section>
-  <section>
+  <section class="movements">
     <table
       mat-table
       [dataSource]="(movements | async) || []"
-      class="mat-elevation-z8"
+      class="mat-elevation-z8 movements__table"
     >
       <ng-container matColumnDef="data_pagamento">
         <th mat-header-cell *matHeaderCellDef>Data</th>
@@ -66,5 +66,13 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    <button
+      style="margin: 2rem auto; display: block"
+      mat-raised-button
+      color="accent"
+      (click)="onClick()"
+    >
+      Aggiungi movimento
+    </button>
   </section>
 </div>
