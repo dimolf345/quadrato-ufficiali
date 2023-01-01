@@ -1,49 +1,40 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
-  AngularFirestoreDocument,
-  DocumentReference,
 } from '@angular/fire/compat/firestore';
 import { Movement } from '../shared/models/movement.model';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, Subscription } from 'rxjs';
 import { OfficerService } from './officers.service';
 
 import * as admin from 'firebase-admin';
 import { Officer } from '../shared/models/officer.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MovementsService {
+export class MovementsService implements OnDestroy {
   private movementsCollection: AngularFirestoreCollection<Movement>;
+  private movementsSub: Subscription = new Subscription();
   public movements: BehaviorSubject<Movement[] | any> = new BehaviorSubject([]);
-  test: any;
 
   constructor(
     private afs: AngularFirestore,
-    private officerService: OfficerService
+    private officerService: OfficerService,
+    private auth: AuthService
   ) {
     this.movementsCollection = this.afs.collection<Movement>('movimenti');
-    this.fetchMovements();
-    this.test = this.afs.doc<Officer>('ufficiali/OrhFo4uNk7e9WQUFA8BX');
+    // Prevents error when logging out from dashboard
+    this.auth.isAuthenticated.subscribe(
+      (isAuth) => !isAuth && this.movementsSub.unsubscribe()
+    );
   }
 
-  addMovement() {
-    const testMovement: Movement = {
-      importo: 99.99,
-      descrizione: 'Movimento aggiunto da API',
-      effettuato_da: this.test.ref,
-      data_pagamento: new Date(),
-      creato_il: new Date(),
-      categoria: 'amari',
-      note: 'Porco dio funziona',
-    };
-    this.movementsCollection.add(testMovement);
-  }
+  addMovement() {}
 
   fetchMovements() {
-    this.movementsCollection
+    this.movementsSub = this.movementsCollection
       .valueChanges({ idField: 'id_movimento' })
       .pipe(
         map((movementsArr: Movement[]) =>
@@ -65,5 +56,8 @@ export class MovementsService {
       .subscribe((movs) => {
         this.movements.next(movs);
       });
+  }
+  ngOnDestroy(): void {
+    this.movementsSub.unsubscribe();
   }
 }

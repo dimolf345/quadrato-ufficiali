@@ -5,14 +5,12 @@ import { CoreRoutingModule } from './core-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { DashboardComponent } from 'src/app/components/dashboard/dashboard.component';
 import { AccountService } from '../../../services/account.service';
-import {
-  AngularFirestore,
-  AngularFirestoreModule,
-} from '@angular/fire/compat/firestore';
-import { CustomAsyncPipe } from 'src/app/pipes/custom-async.pipe';
+
+import { OfficerNamePipe } from 'src/app/pipes/officer-name.pipe';
+import { MovementformComponent } from '../../../components/forms/movementform/movementform.component';
 
 @NgModule({
-  declarations: [DashboardComponent, CustomAsyncPipe],
+  declarations: [DashboardComponent, OfficerNamePipe, MovementformComponent],
   imports: [CommonModule, CoreRoutingModule, MaterialModule],
   exports: [MaterialModule],
   providers: [AccountService],

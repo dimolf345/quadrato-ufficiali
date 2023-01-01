@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccountService } from '../../services/account.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Account } from 'src/app/shared/models/account.model';
 import { MovementsService } from '../../services/movements.service';
 import { Movement } from '../../shared/models/movement.model';
 import { Store } from '@ngrx/store';
 import { getIsAdmin } from 'src/app/store/officers/officers.reducers';
-import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { MatDialog } from '@angular/material/dialog';
+import { MovementformComponent } from '../forms/movementform/movementform.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   currentAccount: Account | undefined = undefined;
   accountSub: Subscription = new Subscription();
   movements: Observable<Movement[] | any> = new Observable();
-  movements2: BehaviorSubject<Movement[] | any> = new BehaviorSubject(null);
   displayedColumns = [
     'data_pagamento',
     'descrizione',
@@ -29,8 +29,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private accountService: AccountService,
     private movementsService: MovementsService,
-    private store: Store
-  ) {}
+    private store: Store,
+    private dialog: MatDialog
+  ) {
+    this.movementsService.fetchMovements();
+  }
 
   ngOnInit(): void {
     this.accountSub = this.accountService.account.subscribe(
@@ -38,6 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
     this.movements = this.movementsService.movements;
     this.isAdmin = this.store.select(getIsAdmin);
+    this.onClick();
   }
 
   ngOnDestroy(): void {
@@ -45,6 +49,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onClick() {
-    this.movementsService.addMovement();
+    this.dialog.open(MovementformComponent);
   }
 }

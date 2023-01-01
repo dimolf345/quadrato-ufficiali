@@ -41,7 +41,6 @@ import { AccountComponent } from './components/account/account.component';
 import { PaymentsComponent } from './components/payments/payments.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AccountService } from './services/account.service';
-import { CustomAsyncPipe } from './pipes/custom-async.pipe';
 
 registerLocaleData(myLocalIT);
 

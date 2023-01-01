@@ -1,5 +1,5 @@
 export interface Officer {
-  id?: string;
+  id_ufficiale?: string;
   attivo: boolean;
   cognome: string;
   nome: string;

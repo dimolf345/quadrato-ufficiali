@@ -8,16 +8,17 @@ import { stopLoading } from 'src/app/store/ui/ui.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { OfficerState } from '../store/officers/officers.reducers';
-import {
-  resetCurrentOfficer,
-  setCurrentOfficer,
-} from '../store/officers/officers.actions';
-import { Officer } from '../shared/models/officer.model';
+import { resetCurrentOfficer } from '../store/officers/officers.actions';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { MovementsService } from './movements.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  currentOfficer: Subscription = new Subscription();
+  availableOfficers: Subscription = new Subscription();
+  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
     private auth: AngularFireAuth,
     private ui: Store<{ ui: UIState }>,
@@ -28,15 +29,13 @@ export class AuthService {
   ) {
     this.auth.onAuthStateChanged((user) => {
       if (user?.email) {
-        this.officerService.getOfficerByEmail(user.email!).then((officer) => {
-          this.officer.dispatch(
-            setCurrentOfficer({ officer: officer as Officer })
-          );
-
-          this.router.navigate(['', 'dashboard']);
-        });
+        this.currentOfficer = this.officerService.watchCurrentOfficer(
+          user.email
+        );
+        this.availableOfficers = this.officerService.getAvailableOfficers();
+        this.isAuthenticated.next(true);
+        this.router.navigate(['', 'dashboard']);
       } else {
-        console.log('DIRECTING TO SIGN IN');
         this.router.navigate(['']);
       }
     });
@@ -70,8 +69,11 @@ export class AuthService {
   }
 
   logout() {
-    this.auth
-      .signOut()
-      .then(() => this.officer.dispatch(resetCurrentOfficer()));
+    this.currentOfficer.unsubscribe();
+    this.availableOfficers.unsubscribe();
+    this.isAuthenticated.next(false);
+    this.auth.signOut().then(() => {
+      this.officer.dispatch(resetCurrentOfficer());
+    });
   }
 }

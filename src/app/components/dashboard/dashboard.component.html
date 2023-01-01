@@ -59,7 +59,10 @@
       <ng-container matColumnDef="effettuato_da">
         <th mat-header-cell *matHeaderCellDef>Effettuato da</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.effettuato_da | async | customAsync }}
+          {{
+            (element.effettuato_da | async | officerName) ||
+              "Caricamento in corso..."
+          }}
         </td>
       </ng-container>
 
@@ -67,12 +70,13 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <button
+      *ngIf="isAdmin"
       style="margin: 2rem auto; display: block"
       mat-raised-button
       color="accent"
       (click)="onClick()"
     >
-      Aggiungi movimento
+      Aggiungi movimento rapido
     </button>
   </section>
 </div>

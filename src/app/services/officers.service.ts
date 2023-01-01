@@ -5,8 +5,15 @@ import {
   DocumentReference,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { lastValueFrom, map, pipe, take } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { lastValueFrom, map, take } from 'rxjs';
 import { Officer } from '../shared/models/officer.model';
+import {
+  resetCurrentOfficer,
+  setAvailableOfficers,
+  setCurrentOfficer,
+} from '../store/officers/officers.actions';
+import { OfficerState } from '../store/officers/officers.reducers';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -15,7 +22,8 @@ import { SnackbarService } from './snackbar.service';
 export class OfficerService {
   constructor(
     private firestore: AngularFirestore,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private officer: Store<{ officers: OfficerState }>
   ) {}
 
   async getOfficerByEmail(email: string): Promise<Officer | boolean> {
@@ -37,6 +45,23 @@ export class OfficerService {
     }
   }
 
+  watchCurrentOfficer(email: string) {
+    return this.firestore
+      .collection<Officer>('ufficiali', (ref) =>
+        ref.where('email', '==', email)
+      )
+      .valueChanges({ idField: 'id_ufficiale' })
+      .subscribe((officer) => {
+        if (officer.length) {
+          this.officer.dispatch(
+            setCurrentOfficer({
+              officer: officer[0],
+            })
+          );
+        }
+      });
+  }
+
   getOfficerByReference(
     reference: DocumentReference
   ): Promise<DocumentData | undefined> | undefined {
@@ -49,5 +74,16 @@ export class OfficerService {
       }
     }
     return officer;
+  }
+
+  getAvailableOfficers() {
+    return this.firestore
+      .collection<Officer>('ufficiali', (ref) =>
+        ref.where('attivo', '==', true)
+      )
+      .valueChanges({ idField: 'id_ufficiale' })
+      .subscribe((officers) =>
+        this.officer.dispatch(setAvailableOfficers({ officers }))
+      );
   }
 }

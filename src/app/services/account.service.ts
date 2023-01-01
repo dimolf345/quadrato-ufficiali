@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -9,8 +9,8 @@ import { Account } from '../shared/models/account.model';
 @Injectable({
   providedIn: 'root',
 })
-export class AccountService {
-  private accountDoc: AngularFirestoreDocument<Account>;
+export class AccountService implements OnDestroy {
+  private accountDoc: AngularFirestoreDocument<Account> | null;
   account: Observable<Account | undefined> = new Observable();
 
   constructor(private afs: AngularFirestore) {
@@ -19,4 +19,8 @@ export class AccountService {
   }
 
   updateBalance(movement: any) {}
+
+  ngOnDestroy(): void {
+    this.accountDoc = null;
+  }
 }
