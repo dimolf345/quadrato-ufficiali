@@ -10,6 +10,10 @@ import { OfficerService } from './officers.service';
 import * as admin from 'firebase-admin';
 import { Officer } from '../shared/models/officer.model';
 import { AuthService } from './auth.service';
+import { UIState } from '../store/ui/ui.reducers';
+import { Store } from '@ngrx/store';
+import { startLoading, stopLoading } from '../store/ui/ui.actions';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +26,9 @@ export class MovementsService implements OnDestroy {
   constructor(
     private afs: AngularFirestore,
     private officerService: OfficerService,
-    private auth: AuthService
+    private auth: AuthService,
+    private store: Store<{ ui: UIState }>,
+    private snackbar: SnackbarService
   ) {
     this.movementsCollection = this.afs.collection<Movement>('movimenti');
     // Prevents error when logging out from dashboard
@@ -31,7 +37,27 @@ export class MovementsService implements OnDestroy {
     );
   }
 
-  addMovement() {}
+  async addMovement(data: Object) {
+    const movement = {
+      ...data,
+      creato_il: Date.now(),
+    } as unknown as Movement;
+    this.store.dispatch(startLoading());
+    try {
+      const result = await this.movementsCollection.add(movement);
+      if (result) {
+        this.snackbar.defaultSnackBar('Movimento aggiunto con successo!');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        this.snackbar.defaultSnackBar(
+          `Impossibile aggiungere movimento. ${error.message}`
+        );
+      }
+    } finally {
+      this.store.dispatch(stopLoading());
+    }
+  }
 
   fetchMovements() {
     this.movementsSub = this.movementsCollection

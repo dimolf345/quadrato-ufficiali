@@ -1,7 +1,8 @@
 <form
   class="new-movement"
   aria-label="aggiungi movimento"
-  [formGroup]="movementForm || null"
+  [formGroup]="movementForm"
+  (ngSubmit)="onSubmit()"
 >
   <h3 class="new-movement__title" class="text-center">Aggiungi movimento</h3>
   <mat-divider style="margin: 10px 0"></mat-divider>
@@ -16,7 +17,13 @@
     </mat-form-field>
     <mat-form-field color="accent" appearance="outline">
       <mat-label>Data movimento</mat-label>
-      <input matInput [matDatepicker]="picker" [max]="maxDate" />
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [max]="maxDate"
+        formControlName="data_pagamento"
+        name="data_pagamento"
+      />
       <mat-hint>DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle
         class="new-movement__date"
@@ -33,13 +40,14 @@
         matInput
         type="text"
         name="importo"
+        formControlName="importo"
       />
     </mat-form-field>
   </div>
   <div class="new-movement__row">
     <mat-form-field appearance="outline" color="accent">
       <mat-label>Effettuato da</mat-label>
-      <mat-select formControlName="categoria" name="effettuato_da">
+      <mat-select formControlName="effettuato_da" name="effettuato_da">
         <mat-option
           *ngFor="let officer of officers | async"
           [value]="officer.id_ufficiale"
@@ -50,12 +58,30 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Descrizione</mat-label>
-      <input matInput type="text" name="descrizione" />
+      <input
+        matInput
+        type="text"
+        name="descrizione"
+        formControlName="descrizione"
+      />
     </mat-form-field>
   </div>
   <mat-form-field appearance="outline">
     <mat-label>Note</mat-label>
-    <input matInput type="text" name="note" />
+    <input matInput type="text" name="note" formControlName="note" />
+    <mat-hint>Lunghezza minima 10 caratteri. Campo non obbligatorio</mat-hint>
   </mat-form-field>
-  <button mat-raised-button color="accent">Aggiungi Movimento</button>
+  <button
+    type="submit"
+    mat-raised-button
+    color="accent"
+    [disabled]="(isLoading$ | async) || !movementForm.valid"
+  >
+    <span *ngIf="!(isLoading$ | async)">Aggiungi movimento</span>
+    <mat-spinner
+      *ngIf="isLoading$ | async"
+      diameter="24"
+      color="warn"
+    ></mat-spinner>
+  </button>
 </form>
