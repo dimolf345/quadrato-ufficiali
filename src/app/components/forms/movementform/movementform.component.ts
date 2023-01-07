@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MovementsService } from 'src/app/services/movements.service';
@@ -26,7 +27,8 @@ export class MovementformComponent implements OnInit {
   constructor(
     private officerStore: Store<{ officers: OfficerState }>,
     private uiStore: Store<{ ui: UIState }>,
-    private movements: MovementsService
+    private movements: MovementsService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -55,5 +57,6 @@ export class MovementformComponent implements OnInit {
 
   onSubmit() {
     this.movements.addMovement(this.movementForm.value);
+    this.dialog.closeAll();
   }
 }

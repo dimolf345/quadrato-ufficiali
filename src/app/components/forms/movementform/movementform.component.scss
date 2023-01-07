@@ -31,6 +31,10 @@
     min-width: 200px;
     margin-top: 20px;
   }
+
+  mat-spinner {
+    display: inline-block;
+  }
 }
 
 @media screen and (min-width: 599px) {

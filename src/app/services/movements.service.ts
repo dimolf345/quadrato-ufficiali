@@ -37,10 +37,11 @@ export class MovementsService implements OnDestroy {
     );
   }
 
-  async addMovement(data: Object) {
+  async addMovement(data: Movement) {
     const movement = {
       ...data,
-      creato_il: Date.now(),
+      creato_il: new Date(),
+      effettuato_da: this.afs.doc(`ufficiali/${data.effettuato_da}`).ref,
     } as unknown as Movement;
     this.store.dispatch(startLoading());
     try {

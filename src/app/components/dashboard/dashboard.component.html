@@ -59,10 +59,7 @@
       <ng-container matColumnDef="effettuato_da">
         <th mat-header-cell *matHeaderCellDef>Effettuato da</th>
         <td mat-cell *matCellDef="let element">
-          {{
-            (element.effettuato_da | async | officerName) ||
-              "Caricamento in corso..."
-          }}
+          {{ element.effettuato_da | async | officerName }}
         </td>
       </ng-container>
 
