@@ -9,6 +9,8 @@ import {
   AngularFirestore,
   AngularFirestoreModule,
 } from '@angular/fire/compat/firestore';
+import { StoreModule } from '@ngrx/store';
+import * as fromTestStore from '../../../modules/core';
 
 @NgModule({
   declarations: [DashboardComponent],
