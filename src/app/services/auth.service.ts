@@ -5,7 +5,6 @@ import { UIState } from '../store/ui/ui.reducers';
 import { startLoading } from '../store/ui/ui.actions';
 import { OfficerService } from './officers.service';
 import { stopLoading } from 'src/app/store/ui/ui.actions';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { OfficerState } from '../store/officers/officers.reducers';
 import {
@@ -13,6 +12,7 @@ import {
   setCurrentOfficer,
 } from '../store/officers/officers.actions';
 import { Officer } from '../shared/models/officer.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
