@@ -1,5 +1,8 @@
 <mat-toolbar color="accent" [class.mat-elevation-z8]="true" class="header">
   <header class="header">
+    <a class="home" routerLink="dashboard">
+      <mat-icon>home</mat-icon>
+    </a>
     <a class="logo" routerLink="">Nave Martinengo - F596</a>
     <div class="header__user" *ngIf="currentOfficer">
       <p>

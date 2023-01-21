@@ -14,6 +14,8 @@ import { UIState } from '../store/ui/ui.reducers';
 import { Store } from '@ngrx/store';
 import { startLoading, stopLoading } from '../store/ui/ui.actions';
 import { SnackbarService } from './snackbar.service';
+import { AccountService } from './account.service';
+import { OfficerState } from '../store/officers/officers.reducers';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +30,9 @@ export class MovementsService implements OnDestroy {
     private officerService: OfficerService,
     private auth: AuthService,
     private store: Store<{ ui: UIState }>,
-    private snackbar: SnackbarService
+    private officerStore: Store<{ officers: OfficerState }>,
+    private snackbar: SnackbarService,
+    private account: AccountService
   ) {
     this.movementsCollection = this.afs.collection<Movement>('movimenti');
     // Prevents error when logging out from dashboard
@@ -46,6 +50,7 @@ export class MovementsService implements OnDestroy {
     this.store.dispatch(startLoading());
     try {
       const result = await this.movementsCollection.add(movement);
+      this.account.updateBalance(data, 'WITHDRAW');
       if (result) {
         this.snackbar.defaultSnackBar('Movimento aggiunto con successo!');
       }

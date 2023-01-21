@@ -40,8 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       (x) => (this.currentAccount = x)
     );
     this.movements = this.movementsService.movements;
-    this.isAdmin = this.store.select(getIsAdmin);
-    this.onClick();
+    this.store.select(getIsAdmin).subscribe((x) => (this.isAdmin = x));
   }
 
   ngOnDestroy(): void {
@@ -52,6 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dialog.open(MovementformComponent, {
       maxWidth: '98vw',
       minWidth: '40vw',
+      id: 'new-movement',
     });
   }
 }

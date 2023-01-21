@@ -57,6 +57,10 @@ export class MovementformComponent implements OnInit {
 
   onSubmit() {
     this.movements.addMovement(this.movementForm.value);
-    this.dialog.closeAll();
+    this.onCloseDialog();
+  }
+
+  onCloseDialog() {
+    this.dialog.getDialogById('new-movement')?.close();
   }
 }

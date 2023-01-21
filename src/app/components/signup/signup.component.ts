@@ -52,6 +52,16 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    const { email, password, confirmPassword } = form.value;
+    const { email, password, confirm_password } = form.value;
+    console.log(form);
+    console.log(password, confirm_password);
+    if (password !== confirm_password) {
+      this.snackbar.defaultSnackBar(
+        'Le due password non corrispondono',
+        'error'
+      );
+      return;
+    }
+    this.auth.signup(email, password);
   }
 }

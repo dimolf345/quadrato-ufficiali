@@ -11,6 +11,7 @@ import { OfficerState } from '../store/officers/officers.reducers';
 import { resetCurrentOfficer } from '../store/officers/officers.actions';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { MovementsService } from './movements.service';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class AuthService {
     private auth: AngularFireAuth,
     private ui: Store<{ ui: UIState }>,
     private officerService: OfficerService,
-    private snackbar: MatSnackBar,
+    private snackbar: SnackbarService,
     private router: Router,
     private officer: Store<{ officers: OfficerState }>
   ) {
@@ -66,6 +67,24 @@ export class AuthService {
       this.ui.dispatch(stopLoading());
     }
     return '';
+  }
+
+  async signup(email: string, password: string): Promise<void> {
+    this.ui.dispatch(startLoading());
+    try {
+      const user = await this.auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      if (user) this.snackbar.defaultSnackBar('Utente creato con successo');
+      this.router.navigate(['', 'login']);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        this.snackbar.defaultSnackBar(error.message, 'error');
+      }
+    } finally {
+      this.ui.dispatch(stopLoading());
+    }
   }
 
   logout() {

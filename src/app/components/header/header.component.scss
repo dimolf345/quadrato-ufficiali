@@ -1,8 +1,9 @@
-.logo {
+.logo,
+.home {
   text-transform: uppercase;
   color: inherit;
   text-decoration: none;
-  transition: transform ease .25s;
+  transition: transform ease 0.25s;
   display: inline-block;
 
   &:hover {
@@ -13,13 +14,19 @@
 
 .header {
   &__user {
-      button {
-          min-width: auto;
-          line-height: initial;
-          padding: 0;
-        }
+    button {
+      min-width: auto;
+      line-height: initial;
+      padding: 0;
+    }
   }
-} 
+}
+
+.home {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
 
 @media screen and (max-width: 599px) {
   .header {
@@ -29,24 +36,18 @@
     width: 100%;
     text-align: center;
 
-
     &__user {
       text-align: center;
       display: flex;
-      
+
       p {
         flex-grow: 1;
       }
-
-
     }
   }
-
 }
 
-
-
-@media  screen and (min-width: 599px) {
+@media screen and (min-width: 599px) {
   mat-toolbar {
     position: relative;
   }
@@ -56,14 +57,13 @@
     justify-content: center;
 
     &__user {
-     position: absolute;
-    display: flex;
-     right: 10px;
+      position: absolute;
+      display: flex;
+      right: 10px;
 
-     button {
-      margin-left: 10px;
-     }
+      button {
+        margin-left: 10px;
+      }
     }
   }
-  
 }

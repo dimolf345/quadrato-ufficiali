@@ -25,10 +25,16 @@
     transform: translateY(-60%);
   }
 
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+  }
+
   .mat-raised-button {
     display: block;
-    margin: 0 auto;
-    min-width: 200px;
+    min-width: 130px;
     margin-top: 20px;
   }
 

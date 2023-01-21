@@ -71,17 +71,27 @@
     <input matInput type="text" name="note" formControlName="note" />
     <mat-hint>Lunghezza minima 10 caratteri. Campo non obbligatorio</mat-hint>
   </mat-form-field>
-  <button
-    type="submit"
-    mat-raised-button
-    color="accent"
-    [disabled]="(isLoading$ | async) || !movementForm.valid"
-  >
-    <span *ngIf="!(isLoading$ | async)">Aggiungi movimento</span>
-    <mat-spinner
-      *ngIf="isLoading$ | async"
-      diameter="24"
+  <div class="new-movement__buttons">
+    <button
+      (click)="onCloseDialog()"
+      mat-raised-button
+      type="button"
       color="warn"
-    ></mat-spinner>
-  </button>
+    >
+      Annulla
+    </button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="accent"
+      [disabled]="(isLoading$ | async) || !movementForm.valid"
+    >
+      <span *ngIf="!(isLoading$ | async)">Aggiungi movimento</span>
+      <mat-spinner
+        *ngIf="isLoading$ | async"
+        diameter="24"
+        color="warn"
+      ></mat-spinner>
+    </button>
+  </div>
 </form>
