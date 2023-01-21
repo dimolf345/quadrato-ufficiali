@@ -36,11 +36,13 @@ import {
 import { reducers } from './store/reducers';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { OfficerspageComponent } from './components/officerspage/officerspage.component';
 import { AccountComponent } from './components/account/account.component';
 import { PaymentsComponent } from './components/payments/payments.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AccountService } from './services/account.service';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 registerLocaleData(myLocalIT);
 
@@ -68,6 +70,9 @@ registerLocaleData(myLocalIT);
     AngularFireAuthModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
+    }),
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router',
     }),
   ],
   providers: [AuthService, SnackbarService, AngularFirestore, AccountService],

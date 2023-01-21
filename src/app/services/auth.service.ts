@@ -5,12 +5,10 @@ import { UIState } from '../store/ui/ui.reducers';
 import { startLoading } from '../store/ui/ui.actions';
 import { OfficerService } from './officers.service';
 import { stopLoading } from 'src/app/store/ui/ui.actions';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { OfficerState } from '../store/officers/officers.reducers';
 import { resetCurrentOfficer } from '../store/officers/officers.actions';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { MovementsService } from './movements.service';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
