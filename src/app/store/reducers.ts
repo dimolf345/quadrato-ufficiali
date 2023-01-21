@@ -1,5 +1,5 @@
-import { UIReducer } from './ui/ui.reducers';
-import { OfficersReducer } from './officers/officers.reducers';
+import { UIReducer, UIState } from './ui/ui.reducers';
+import { OfficerState, OfficersReducer } from './officers/officers.reducers';
 import { routerReducer } from '@ngrx/router-store';
 
 export const reducers = {
@@ -7,3 +7,8 @@ export const reducers = {
   officers: OfficersReducer,
   router: routerReducer,
 };
+
+export interface AppState {
+  ui: UIState;
+  officers: OfficerState;
+}

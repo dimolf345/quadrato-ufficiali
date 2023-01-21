@@ -7,36 +7,34 @@ import { OfficerService } from './officers.service';
 import { stopLoading } from 'src/app/store/ui/ui.actions';
 import { Router } from '@angular/router';
 import { OfficerState } from '../store/officers/officers.reducers';
-import {
-  resetCurrentOfficer,
-  setCurrentOfficer,
-} from '../store/officers/officers.actions';
-import { Officer } from '../shared/models/officer.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { resetCurrentOfficer } from '../store/officers/officers.actions';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  currentOfficer: Subscription = new Subscription();
+  availableOfficers: Subscription = new Subscription();
+  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
     private auth: AngularFireAuth,
     private ui: Store<{ ui: UIState }>,
     private officerService: OfficerService,
-    private snackbar: MatSnackBar,
+    private snackbar: SnackbarService,
     private router: Router,
     private officer: Store<{ officers: OfficerState }>
   ) {
     this.auth.onAuthStateChanged((user) => {
       if (user?.email) {
-        this.officerService.getOfficerByEmail(user.email!).then((officer) => {
-          this.officer.dispatch(
-            setCurrentOfficer({ officer: officer as Officer })
-          );
-
-          this.router.navigate(['', 'dashboard']);
-        });
+        this.currentOfficer = this.officerService.watchCurrentOfficer(
+          user.email
+        );
+        this.availableOfficers = this.officerService.getAvailableOfficers();
+        this.isAuthenticated.next(true);
+        this.router.navigate(['', 'dashboard']);
       } else {
-        console.log('DIRECTING TO SIGN IN');
         this.router.navigate(['']);
       }
     });
@@ -69,9 +67,30 @@ export class AuthService {
     return '';
   }
 
+  async signup(email: string, password: string): Promise<void> {
+    this.ui.dispatch(startLoading());
+    try {
+      const user = await this.auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      if (user) this.snackbar.defaultSnackBar('Utente creato con successo');
+      this.router.navigate(['', 'login']);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        this.snackbar.defaultSnackBar(error.message, 'error');
+      }
+    } finally {
+      this.ui.dispatch(stopLoading());
+    }
+  }
+
   logout() {
-    this.auth
-      .signOut()
-      .then(() => this.officer.dispatch(resetCurrentOfficer()));
+    this.currentOfficer.unsubscribe();
+    this.availableOfficers.unsubscribe();
+    this.isAuthenticated.next(false);
+    this.auth.signOut().then(() => {
+      this.officer.dispatch(resetCurrentOfficer());
+    });
   }
 }

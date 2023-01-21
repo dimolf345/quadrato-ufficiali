@@ -30,7 +30,6 @@
           ngModel
           required
           #email
-          [disabled]="canRegister"
         />
         <mat-error *ngIf="!email.value">Il campo email è vuoto</mat-error>
         <mat-hint>Inserire l'indirizzo email istituzionale</mat-hint>

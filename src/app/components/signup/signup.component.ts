@@ -35,7 +35,7 @@ export class SignupComponent implements OnInit {
       if (!result) {
         this.snackbar.defaultSnackBar(
           `L'indirizzo email ${emailInput.value} non è presente all'interno del DB. Contattare il direttore di quadrato.`,
-          true
+          'error'
         );
         return;
       } else {
@@ -43,7 +43,7 @@ export class SignupComponent implements OnInit {
       }
     } catch (error) {
       if (error instanceof Error) {
-        this.snackbar.defaultSnackBar(error.message, true);
+        this.snackbar.defaultSnackBar(error.message, 'error');
       }
     } finally {
       this.store.dispatch(stopLoading());
@@ -51,6 +51,16 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    const { email, password, confirmPassword } = form.value;
+    const { email, password, confirm_password } = form.value;
+    console.log(form);
+    console.log(password, confirm_password);
+    if (password !== confirm_password) {
+      this.snackbar.defaultSnackBar(
+        'Le due password non corrispondono',
+        'error'
+      );
+      return;
+    }
+    this.auth.signup(email, password);
   }
 }

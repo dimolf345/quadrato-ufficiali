@@ -13,6 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './services/auth.service';
 import { SnackbarService } from './services/snackbar.service';
 
+//Locales
+import myLocalIT from '@angular/common/locales/it';
+import { registerLocaleData } from '@angular/common';
+
 // Components
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
@@ -39,6 +43,8 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AccountService } from './services/account.service';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+
+registerLocaleData(myLocalIT);
 
 @NgModule({
   declarations: [

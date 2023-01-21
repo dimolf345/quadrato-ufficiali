@@ -25,12 +25,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .select('officers')
       .pipe(
         map((state) => {
-          console.log(state);
           return state.currentOfficer;
         })
       )
       .subscribe((x) => {
-        console.log(x);
         this.currentOfficer = x;
       });
   }

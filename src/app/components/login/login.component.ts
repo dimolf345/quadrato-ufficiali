@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  loading$: Observable<boolean> = new Observable();
+  isLoading$: Observable<boolean> = new Observable();
   userSub: Subscription = new Subscription();
   errorMsg: string | null = null;
 
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private AuthService: AuthService,
     private router: Router
   ) {
-    this.loading$ = this.store
+    this.isLoading$ = this.store
       .select('ui')
       .pipe(map((state: UIState) => state.isLoading));
   }

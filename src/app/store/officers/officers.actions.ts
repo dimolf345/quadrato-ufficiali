@@ -8,3 +8,7 @@ export const setCurrentOfficer = createAction(
 export const resetCurrentOfficer = createAction(
   '[OFFICERS] RESET_CURRENT_OFFICER'
 );
+export const setAvailableOfficers = createAction(
+  '[OFFICERS] SET_AVAILABLE_OFFICERS',
+  props<{ officers: Officer[] }>()
+);
