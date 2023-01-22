@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Store } from '@ngrx/store';
-import { UIState } from '../store/ui/ui.reducers';
-import { startLoading } from '../store/ui/ui.actions';
 import { OfficerService } from './officers.service';
-import { stopLoading } from 'src/app/store/ui/ui.actions';
-import { Router } from '@angular/router';
 import { OfficerState } from '../store/officers/officers.reducers';
 import { resetCurrentOfficer } from '../store/officers/officers.actions';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +17,6 @@ export class AuthService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
     private auth: AngularFireAuth,
-    private ui: Store<{ ui: UIState }>,
     private officerService: OfficerService,
     private snackbar: SnackbarService,
     private router: Router,
@@ -41,14 +37,12 @@ export class AuthService {
   }
 
   async verifyEmail(email: string): Promise<any> {
-    this.ui.dispatch(startLoading());
     const result = await this.officerService.getOfficerByEmail(email);
     if (result) return true;
     return false;
   }
 
   async login(email: string, password: string): Promise<string> {
-    this.ui.dispatch(startLoading());
     try {
       await this.auth.signInWithEmailAndPassword(email, password);
     } catch (error: unknown) {
@@ -62,13 +56,11 @@ export class AuthService {
         return error.message;
       }
     } finally {
-      this.ui.dispatch(stopLoading());
     }
     return '';
   }
 
   async signup(email: string, password: string): Promise<void> {
-    this.ui.dispatch(startLoading());
     try {
       const user = await this.auth.createUserWithEmailAndPassword(
         email,
@@ -81,7 +73,6 @@ export class AuthService {
         this.snackbar.defaultSnackBar(error.message, 'error');
       }
     } finally {
-      this.ui.dispatch(stopLoading());
     }
   }
 

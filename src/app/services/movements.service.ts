@@ -10,9 +10,7 @@ import { OfficerService } from './officers.service';
 import * as admin from 'firebase-admin';
 import { Officer } from '../shared/models/officer.model';
 import { AuthService } from './auth.service';
-import { UIState } from '../store/ui/ui.reducers';
 import { Store } from '@ngrx/store';
-import { startLoading, stopLoading } from '../store/ui/ui.actions';
 import { SnackbarService } from './snackbar.service';
 import { AccountService } from './account.service';
 import { OfficerState } from '../store/officers/officers.reducers';
@@ -29,7 +27,6 @@ export class MovementsService implements OnDestroy {
     private afs: AngularFirestore,
     private officerService: OfficerService,
     private auth: AuthService,
-    private store: Store<{ ui: UIState }>,
     private officerStore: Store<{ officers: OfficerState }>,
     private snackbar: SnackbarService,
     private account: AccountService
@@ -47,7 +44,6 @@ export class MovementsService implements OnDestroy {
       creato_il: new Date(),
       effettuato_da: this.afs.doc(`ufficiali/${data.effettuato_da}`).ref,
     } as unknown as Movement;
-    this.store.dispatch(startLoading());
     try {
       const result = await this.movementsCollection.add(movement);
       this.account.updateBalance(data, 'WITHDRAW');
@@ -61,7 +57,6 @@ export class MovementsService implements OnDestroy {
         );
       }
     } finally {
-      this.store.dispatch(stopLoading());
     }
   }
 

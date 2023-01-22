@@ -10,7 +10,6 @@ import {
   OfficerState,
   getAvailableOfficers,
 } from 'src/app/store/officers/officers.reducers';
-import { UIState, getIsLoading } from 'src/app/store/ui/ui.reducers';
 
 @Component({
   selector: 'app-movementform',
@@ -26,7 +25,6 @@ export class MovementformComponent implements OnInit {
 
   constructor(
     private officerStore: Store<{ officers: OfficerState }>,
-    private uiStore: Store<{ ui: UIState }>,
     private movements: MovementsService,
     private dialog: MatDialog
   ) {}
@@ -34,7 +32,6 @@ export class MovementformComponent implements OnInit {
   ngOnInit(): void {
     this.setMovementForm();
     this.officers = this.officerStore.select(getAvailableOfficers);
-    this.isLoading$ = this.uiStore.select((state) => state.ui.isLoading);
   }
 
   setMovementForm() {

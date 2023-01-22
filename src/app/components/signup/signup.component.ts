@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { NgForm } from '@angular/forms';
 import { map, Observable } from 'rxjs';
-import { UIState } from '../../store/ui/ui.reducers';
-import { Store } from '@ngrx/store';
-import { startLoading } from '../../store/ui/ui.actions';
 import { SnackbarService } from '../../services/snackbar.service';
-import { stopLoading } from 'src/app/store/ui/ui.actions';
 
 @Component({
   selector: 'app-signup',
@@ -17,19 +13,10 @@ export class SignupComponent implements OnInit {
   canRegister: boolean = false;
   loading$: Observable<boolean> = new Observable();
 
-  constructor(
-    private auth: AuthService,
-    private store: Store<{ ui: UIState }>,
-    private snackbar: SnackbarService
-  ) {
-    this.loading$ = this.store
-      .select('ui')
-      .pipe(map((state: UIState) => state.isLoading));
-  }
+  constructor(private auth: AuthService, private snackbar: SnackbarService) {}
   ngOnInit(): void {}
 
   async verifyEmail(emailInput: HTMLInputElement) {
-    this.store.dispatch(startLoading());
     try {
       const result = await this.auth.verifyEmail(emailInput.value);
       if (!result) {
@@ -46,7 +33,6 @@ export class SignupComponent implements OnInit {
         this.snackbar.defaultSnackBar(error.message, 'error');
       }
     } finally {
-      this.store.dispatch(stopLoading());
     }
   }
 

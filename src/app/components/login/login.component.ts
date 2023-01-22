@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, map, pipe, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { UIState } from 'src/app/store/ui/ui.reducers';
 import { AuthService } from '../../services/auth.service';
 import { NgForm } from '@angular/forms';
 import { OfficerState } from '../../store/officers/officers.reducers';
@@ -17,15 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   userSub: Subscription = new Subscription();
   errorMsg: string | null = null;
 
-  constructor(
-    private store: Store<{ ui: UIState; officers: OfficerState }>,
-    private AuthService: AuthService,
-    private router: Router
-  ) {
-    this.isLoading$ = this.store
-      .select('ui')
-      .pipe(map((state: UIState) => state.isLoading));
-  }
+  constructor(private AuthService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     // this.userSub = this.store.select('user').subscribe((user) => {
