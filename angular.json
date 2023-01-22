@@ -118,6 +118,10 @@
   },
   "cli": {
     "analytics": false,
-    "defaultCollection": "@ngrx/schematics"
+    "schematicCollections": [
+      "@schematics/angular",
+      "@angular/material",
+      "@ngrx/schematics"
+    ]
   }
 }
