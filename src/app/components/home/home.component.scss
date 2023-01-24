@@ -65,8 +65,12 @@
     background-position: center center;
   }
 
-  .home {
-    &__title {
-    }
+  .card {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .card__button {
+    width: 130px;
   }
 }

@@ -1,6 +1,6 @@
 <div class="background"></div>
-<mat-card>
-  <mat-card-title>Entra nel portale</mat-card-title>
+<mat-card class="mat-elevation-z8">
+  <mat-card-title class="color-primary">Entra nel portale</mat-card-title>
   <form class="login" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
     <mat-card-content>
       <!-- Email -->
@@ -41,7 +41,7 @@
       </mat-form-field>
       <button
         [disabled]="!loginForm.valid || (isLoading$ | async)"
-        color="accent"
+        color="primary"
         class="login__button"
         mat-raised-button
       >

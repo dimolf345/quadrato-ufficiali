@@ -117,7 +117,10 @@ $my-theme: mat.define-light-theme(
       accent: $my-accent,
       warn: $my-warn,
     ),
-    typography: mat.define-typography-config(),
+    typography:
+      mat.define-typography-config(
+        $font-family: '"Alata", sans-serif',
+      ),
     density: 0,
   )
 );

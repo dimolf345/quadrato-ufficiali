@@ -1,80 +1,79 @@
 .signup {
-    .mat-form-field {
-        display: block;
-        margin: 10px 0;
+  .mat-form-field {
+    display: block;
+    margin: 10px 0;
+  }
+
+  &__button {
+    width: 100%;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  &__info {
+    h3 {
+      font-size: 14px;
+      position: relative;
     }
 
-    &__button {
-        width: 100%;
-        text-transform: uppercase;
-        margin-bottom: 20px;
+    mat-icon {
+      position: absolute;
+      scale: 0.7;
     }
+  }
 
-    &__info {
+  &__description {
+    width: 100%;
+    font-size: 12px;
+    line-height: 1.25;
+    text-align: justify;
+    margin-bottom: 20px;
 
-        h3 {
-            font-size: 14px;
-            position: relative;
-        }
-
-        mat-icon {
-            position: absolute;
-            scale: 0.7;
-        }
+    strong {
+      text-decoration: underline;
+      color: var(--warn-color);
     }
-
-    &__description {
-        width: 100%;
-        font-size: 12px;
-        line-height: 1.1;
-        text-align: justify;
-        margin-bottom: 20px;
-
-        strong {
-            text-decoration: underline;
-            color: var(--warn-color)
-        }
-    }
-     mat-spinner {
-      display: inline-block;
-    }
+  }
+  mat-spinner {
+    display: inline-block;
+  }
 }
 
 mat-card {
-    width: 80vw;
-    max-width: 350px;
-    margin: 20px auto;
+  width: 80vw;
+  max-width: 350px;
+  margin: 20px auto;
 }
 
 mat-card-title {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .background {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    height: 100%;
-    width: 100%;
-    z-index: -99;
-    filter: opacity(0.75) blur(1px);
-    max-width: 1600px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  z-index: -99;
+  filter: opacity(0.75) blur(1px);
+  max-width: 1600px;
 }
 
 @media screen and (min-width: 599px) {
-    .background {
-        background: url("../../../assets/background-desktop.jpg");
-        background-size: cover;
-        background-position: center center;
-    }
+  .background {
+    background: url("../../../assets/background-desktop.jpg");
+    background-size: cover;
+    background-position: center center;
+  }
 }
 
 @media screen and (max-width: 599px) {
-    .background {
-        background: url("../../../assets/background-mobile.jpg");
-        background-size: cover;
-        background-position: center center;
-    }
+  .background {
+    background: url("../../../assets/background-mobile.jpg");
+    background-size: cover;
+    background-position: center center;
+  }
 }

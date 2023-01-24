@@ -10,6 +10,7 @@ body {
 body {
   margin: 0;
   font-family: "Alata", "Helvetica Neue", sans-serif;
+  font-weight: 500;
 }
 
 .app {
@@ -32,4 +33,13 @@ body {
 
 .color-primary {
   color: map-get($my-primary, 500);
+}
+
+.mat-mdc-form-field {
+  display: block !important;
+  margin-bottom: 20px;
+}
+
+.mat-mdc-card-title {
+  margin: 20px 0 0 0 !important;
 }
