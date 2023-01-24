@@ -1,21 +1,21 @@
 <div class="background"></div>
 <mat-card>
-  <mat-card-title>Registrati al portale</mat-card-title>
-  <div class="signup__info">
+  <mat-card-title class="color-primary">Registrati al portale</mat-card-title>
+  <mat-card-content>
     <h3>
       Come funziona
       <mat-icon color="warn">help</mat-icon>
     </h3>
-  </div>
-  <p class="signup__description">
-    Per poterti registrare al portale
-    <strong>
-      un direttore di quadrato deve averti aggiunto tra gli ufficiali
-      contribuenti.</strong
-    >
-    Inserisci il tuo indirizzo istituzionale nel campo email per verificare la
-    possibilità di registrarti al portale.
-  </p>
+    <p class="signup__description">
+      Per poterti registrare al portale
+      <strong>
+        un direttore di quadrato deve averti aggiunto tra gli ufficiali
+        contribuenti.</strong
+      >
+      Inserisci il tuo indirizzo istituzionale nel campo email per verificare la
+      possibilità di registrarti al portale.
+    </p>
+  </mat-card-content>
   <form class="signup" #signupForm="ngForm" aria-label="Registrati">
     <mat-card-content>
       <!-- Email -->
@@ -37,7 +37,7 @@
       <button
         *ngIf="!canRegister"
         type="button"
-        color="accent"
+        color="primary"
         class="signup__button"
         mat-raised-button
         (click)="verifyEmail(email)"
@@ -88,7 +88,7 @@
         </mat-form-field>
         <button
           type="button"
-          color="accent"
+          color="warn"
           class="signup__button"
           mat-raised-button
           (click)="canRegister = false"
@@ -97,7 +97,7 @@
         </button>
         <button
           type="button"
-          color="accent"
+          color="primary"
           class="signup__button"
           mat-raised-button
           (click)="onSubmit(signupForm)"

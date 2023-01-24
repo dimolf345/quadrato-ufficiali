@@ -1,15 +1,16 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons+Round";
+@import url("https://fonts.googleapis.com/css2?family=Alata:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Homemade+Apple&display=swap");
+@import "./my-theme.scss";
+
 html,
 body {
   min-height: 100%;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.mat-typography p,
-.mat-typography h3 {
-  margin: 0;
+  font-family: "Alata", "Helvetica Neue", sans-serif;
+  font-weight: 500;
 }
 
 .app {
@@ -30,24 +31,15 @@ body {
   text-align: center !important;
 }
 
-.snackbar {
-  &__error {
-    background-color: var(--warn-color);
-    color: white;
-    font-weight: bold;
-  }
+.color-primary {
+  color: map-get($my-primary, 500);
 }
 
-.mat-header-row {
-  background-color: var(--accent-color);
+.mat-mdc-form-field {
+  display: block !important;
+  margin-bottom: 20px;
 }
 
-th.mat-header-cell {
-  color: white;
-  font-size: 1rem;
-  padding: 10px !important;
-}
-
-td.mat-cell {
-  padding: 10px !important;
+.mat-mdc-card-title {
+  margin: 20px 0 0 0 !important;
 }

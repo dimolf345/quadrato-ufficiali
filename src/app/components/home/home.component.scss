@@ -14,13 +14,19 @@
   &__title {
     font-family: "Dancing Script", cursive;
     text-align: center;
-    color: var(--text-primary-darker-color);
   }
 }
 
-.login-card {
+.card {
   display: flex;
   flex-direction: column;
+  padding: 1rem 2rem;
+  background-color: rgba(#ffff, 0.4);
+
+  &__button-container {
+    display: flex;
+    justify-content: space-between;
+  }
 
   &__button {
     text-transform: uppercase;
@@ -39,8 +45,16 @@
   .home {
     &__title {
       margin-top: 30px;
-      color: var(--accent-darker-color);
+      color: var(--);
     }
+  }
+
+  .card {
+    width: 500px;
+  }
+
+  .card__button {
+    padding: 1.5rem;
   }
 }
 
@@ -51,8 +65,12 @@
     background-position: center center;
   }
 
-  .home {
-    &__title {
-    }
+  .card {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .card__button {
+    width: 130px;
   }
 }
