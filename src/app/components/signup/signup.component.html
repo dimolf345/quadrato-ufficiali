@@ -16,7 +16,12 @@
       possibilità di registrarti al portale.
     </p>
   </mat-card-content>
-  <form class="signup" #signupForm="ngForm" aria-label="Registrati">
+  <form
+    class="signup"
+    #signupForm="ngForm"
+    aria-label="Registrati"
+    (ngSubmit)="onSubmit(signupForm)"
+  >
     <mat-card-content>
       <!-- Email -->
       <mat-form-field appearance="outline">
@@ -42,9 +47,9 @@
         mat-raised-button
         (click)="verifyEmail(email)"
       >
-        <span *ngIf="!(loading$ | async)">Verifica email</span>
+        <span *ngIf="!(isLoading$ | async)">Verifica email</span>
         <mat-spinner
-          *ngIf="loading$ | async"
+          *ngIf="isLoading$ | async"
           diameter="24"
           color="warn"
         ></mat-spinner>
@@ -96,18 +101,22 @@
           Reset
         </button>
         <button
-          type="button"
+          type="submit"
           color="primary"
           class="signup__button"
           mat-raised-button
-          (click)="onSubmit(signupForm)"
           [disabled]="
             !signupForm.valid ||
-            (loading$ | async) ||
+            (isLoading$ | async) ||
             password.value !== confirm_password.value
           "
         >
-          Registrati
+          <span *ngIf="!(isLoading$ | async)">Registrati</span>
+          <mat-spinner
+            *ngIf="isLoading$ | async"
+            diameter="24"
+            color="primary"
+          ></mat-spinner>
         </button>
       </div>
     </mat-card-content>

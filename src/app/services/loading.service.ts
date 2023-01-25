@@ -30,6 +30,6 @@ export class LoadingService {
   }
 
   stopLoading() {
-    this.loadingSubject.next(true);
+    this.loadingSubject.next(false);
   }
 }

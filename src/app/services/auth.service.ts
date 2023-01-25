@@ -47,15 +47,8 @@ export class AuthService {
       await this.auth.signInWithEmailAndPassword(email, password);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        this.snackbar.open(error.message, '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-          panelClass: ['snackbar__error'],
-        });
         return error.message;
       }
-    } finally {
     }
     return '';
   }
