@@ -35,6 +35,10 @@ body {
   color: map-get($my-primary, 500);
 }
 
+.color-warn {
+  color: map-get($my-warn, 500);
+}
+
 .mat-mdc-form-field {
   display: block !important;
   margin-bottom: 20px;

@@ -3,20 +3,30 @@ import { AuthService } from '../../services/auth.service';
 import { NgForm } from '@angular/forms';
 import { map, Observable } from 'rxjs';
 import { SnackbarService } from '../../services/snackbar.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
+  providers: [LoadingService],
 })
 export class SignupComponent implements OnInit {
   canRegister: boolean = false;
-  loading$: Observable<boolean> = new Observable();
+  isLoading$: Observable<boolean> = new Observable();
 
-  constructor(private auth: AuthService, private snackbar: SnackbarService) {}
-  ngOnInit(): void {}
+  constructor(
+    private auth: AuthService,
+    private snackbar: SnackbarService,
+    private loadingService: LoadingService
+  ) {}
+
+  ngOnInit(): void {
+    this.isLoading$ = this.loadingService.loading$;
+  }
 
   async verifyEmail(emailInput: HTMLInputElement) {
+    this.loadingService.startLoading();
     try {
       const result = await this.auth.verifyEmail(emailInput.value);
       if (!result) {
@@ -33,13 +43,12 @@ export class SignupComponent implements OnInit {
         this.snackbar.defaultSnackBar(error.message, 'error');
       }
     } finally {
+      this.loadingService.stopLoading();
     }
   }
 
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
     const { email, password, confirm_password } = form.value;
-    console.log(form);
-    console.log(password, confirm_password);
     if (password !== confirm_password) {
       this.snackbar.defaultSnackBar(
         'Le due password non corrispondono',
@@ -47,6 +56,15 @@ export class SignupComponent implements OnInit {
       );
       return;
     }
-    this.auth.signup(email, password);
+    this.loadingService.startLoading();
+    try {
+      await this.auth.signup(email, password);
+    } catch (error) {
+      if (error instanceof Error) {
+        this.snackbar.defaultSnackBar(error.message, 'error');
+      }
+    } finally {
+      this.loadingService.stopLoading();
+    }
   }
 }
