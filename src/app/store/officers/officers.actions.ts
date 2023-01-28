@@ -12,3 +12,12 @@ export const setAvailableOfficers = createAction(
   '[OFFICERS] SET_AVAILABLE_OFFICERS',
   props<{ officers: Officer[] }>()
 );
+
+export const getCurrentOfficerProfile = createAction(
+  '[Login Page] LOAD OFFICER',
+  props<{ email: string }>()
+);
+
+export const getActiveOfficers = createAction(
+  '[Dashboard] GET ACTIVE OFFICERS'
+);

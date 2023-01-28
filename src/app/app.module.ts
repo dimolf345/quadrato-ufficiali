@@ -43,6 +43,7 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AccountService } from './services/account.service';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { EffectsModule } from '@ngrx/effects';
 
 registerLocaleData(myLocalIT);
 
@@ -74,6 +75,7 @@ registerLocaleData(myLocalIT);
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
     }),
+    EffectsModule.forRoot([]),
   ],
   providers: [AuthService, SnackbarService, AngularFirestore, AccountService],
   bootstrap: [AppComponent],

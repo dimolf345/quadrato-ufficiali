@@ -6,7 +6,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { lastValueFrom, map, take } from 'rxjs';
+import { Subject, catchError, lastValueFrom, map, switchMap, take } from 'rxjs';
 import { Officer } from '../shared/models/officer.model';
 import {
   resetCurrentOfficer,
@@ -43,6 +43,17 @@ export class OfficerService {
       return false;
     } finally {
     }
+  }
+
+  async getOfficerByEmail2(email: string) {
+    return new Subject<string>().pipe(
+      switchMap(() =>
+        this.firestore
+          .collection('ufficiali', (ref) => ref.where('email', '==', email))
+          .valueChanges({ idField: 'id_ufficiale' })
+      ),
+      catchError((_, caught) => `${caught} non trovato`)
+    );
   }
 
   watchCurrentOfficer(email: string) {
