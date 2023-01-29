@@ -6,13 +6,9 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject, catchError, lastValueFrom, map, switchMap, take } from 'rxjs';
+import { lastValueFrom, map, switchMap, take, Observable } from 'rxjs';
 import { Officer } from '../shared/models/officer.model';
-import {
-  resetCurrentOfficer,
-  setAvailableOfficers,
-  setCurrentOfficer,
-} from '../store/officers/officers.actions';
+import * as fromOfficers from '../store/officers/officers.actions';
 import { OfficerState } from '../store/officers/officers.reducers';
 import { SnackbarService } from './snackbar.service';
 
@@ -26,51 +22,22 @@ export class OfficerService {
     private officer: Store<{ officers: OfficerState }>
   ) {}
 
-  async getOfficerByEmail(email: string): Promise<Officer | boolean> {
-    try {
-      const search = this.firestore
-        .collection('ufficiali', (ref) => ref.where('email', '==', email))
-        .snapshotChanges()
-        .pipe(
-          take(1),
-          map((results) => {
-            if (!results.length) return false;
-            else return results[0].payload.doc.data() as Officer;
-          })
-        );
-      return lastValueFrom(search);
-    } catch (error) {
-      return false;
-    } finally {
-    }
-  }
-
-  async getOfficerByEmail2(email: string) {
-    return new Subject<string>().pipe(
-      switchMap(() =>
-        this.firestore
-          .collection('ufficiali', (ref) => ref.where('email', '==', email))
-          .valueChanges({ idField: 'id_ufficiale' })
-      ),
-      catchError((_, caught) => `${caught} non trovato`)
+  // on Login loads the logged officer profile and gets the active officers in order to same them into the store
+  setLoggedAndActiveOfficers(loggedEmail: string) {
+    this.officer.dispatch(
+      fromOfficers.getLoggedOfficer({
+        email: loggedEmail,
+      })
     );
+    this.officer.dispatch(fromOfficers.getActiveOfficers());
   }
 
-  watchCurrentOfficer(email: string) {
+  getOfficerByEmail(email: string): Observable<Officer[]> {
     return this.firestore
       .collection<Officer>('ufficiali', (ref) =>
         ref.where('email', '==', email)
       )
-      .valueChanges({ idField: 'id_ufficiale' })
-      .subscribe((officer) => {
-        if (officer.length) {
-          this.officer.dispatch(
-            setCurrentOfficer({
-              officer: officer[0],
-            })
-          );
-        }
-      });
+      .valueChanges({ idField: 'id_ufficiale' });
   }
 
   getOfficerByReference(
@@ -87,14 +54,11 @@ export class OfficerService {
     return officer;
   }
 
-  getAvailableOfficers() {
+  getActiveOfficers(): Observable<Officer[]> {
     return this.firestore
       .collection<Officer>('ufficiali', (ref) =>
         ref.where('attivo', '==', true)
       )
-      .valueChanges({ idField: 'id_ufficiale' })
-      .subscribe((officers) =>
-        this.officer.dispatch(setAvailableOfficers({ officers }))
-      );
+      .valueChanges({ idField: 'id_ufficiale' });
   }
 }

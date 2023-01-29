@@ -36,6 +36,7 @@ import {
 import { reducers } from './store/reducers';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { OfficersEffects } from './store/officers/officers.effects';
 
 import { OfficerspageComponent } from './components/officerspage/officerspage.component';
 import { AccountComponent } from './components/account/account.component';
@@ -75,7 +76,7 @@ registerLocaleData(myLocalIT);
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([OfficersEffects]),
   ],
   providers: [AuthService, SnackbarService, AngularFirestore, AccountService],
   bootstrap: [AppComponent],

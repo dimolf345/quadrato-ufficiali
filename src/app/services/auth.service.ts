@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   currentOfficer: Subscription = new Subscription();
-  availableOfficers: Subscription = new Subscription();
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
     private auth: AngularFireAuth,
@@ -24,10 +23,7 @@ export class AuthService {
   ) {
     this.auth.onAuthStateChanged((user) => {
       if (user?.email) {
-        this.currentOfficer = this.officerService.watchCurrentOfficer(
-          user.email
-        );
-        this.availableOfficers = this.officerService.getAvailableOfficers();
+        this.officerService.setLoggedAndActiveOfficers(user.email);
         this.isAuthenticated.next(true);
         this.router.navigate(['', 'dashboard']);
       } else {
@@ -71,7 +67,6 @@ export class AuthService {
 
   logout() {
     this.currentOfficer.unsubscribe();
-    this.availableOfficers.unsubscribe();
     this.isAuthenticated.next(false);
     this.auth.signOut().then(() => {
       this.officer.dispatch(resetCurrentOfficer());
