@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Store } from '@ngrx/store';
 import { OfficerService } from './officers.service';
-import { OfficerState } from '../store/officers/officers.reducers';
-import { resetCurrentOfficer } from '../store/officers/officers.actions';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
 import { Router } from '@angular/router';
 
@@ -18,8 +15,7 @@ export class AuthService {
     private auth: AngularFireAuth,
     private officerService: OfficerService,
     private snackbar: SnackbarService,
-    private router: Router,
-    private officer: Store<{ officers: OfficerState }>
+    private router: Router
   ) {
     this.auth.onAuthStateChanged((user) => {
       if (user?.email) {
@@ -68,8 +64,6 @@ export class AuthService {
   logout() {
     this.currentOfficer.unsubscribe();
     this.isAuthenticated.next(false);
-    this.auth.signOut().then(() => {
-      this.officer.dispatch(resetCurrentOfficer());
-    });
+    this.auth.signOut().then();
   }
 }
