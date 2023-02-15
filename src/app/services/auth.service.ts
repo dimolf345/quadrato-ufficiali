@@ -1,21 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { OfficerService } from './officers.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
 import { Router } from '@angular/router';
+import { Officer } from '../shared/models/officer.model';
+import { AppState } from '../store/reducers';
+import { Store } from '@ngrx/store';
+import * as fromOfficer from '../store/officers/officers.reducers';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  currentOfficer: Subscription = new Subscription();
+export class AuthService implements OnInit {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
     private auth: AngularFireAuth,
     private officerService: OfficerService,
     private snackbar: SnackbarService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {
     this.auth.onAuthStateChanged((user) => {
       if (user?.email) {
@@ -23,10 +27,14 @@ export class AuthService {
         this.isAuthenticated.next(true);
         this.router.navigate(['', 'dashboard']);
       } else {
+        this.isAuthenticated.next(false);
+        this.officerService.resetCurrentOfficer();
         this.router.navigate(['']);
       }
     });
   }
+
+  ngOnInit(): void {}
 
   async verifyEmail(email: string): Promise<any> {
     const result = await this.officerService.getOfficerByEmail(email);
@@ -62,8 +70,6 @@ export class AuthService {
   }
 
   logout() {
-    this.currentOfficer.unsubscribe();
-    this.isAuthenticated.next(false);
-    this.auth.signOut().then();
+    this.auth.signOut();
   }
 }

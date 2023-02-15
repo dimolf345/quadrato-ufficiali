@@ -4,14 +4,14 @@
       <mat-icon>home</mat-icon>
     </a>
     <a class="logo" routerLink="">Nave Martinengo - F596</a>
-    <div class="header__user" *ngIf="currentOfficer">
+    <div class="header__user" *ngIf="(currentOfficer$ | async) as officer">
       <p>
         {{
-          currentOfficer.grado +
-            " " +
-            currentOfficer.nome +
-            " " +
-            currentOfficer.cognome
+        officer.grado +
+        " " +
+        officer.nome +
+        " " +
+        officer.cognome
         }}
       </p>
       <button mat-button type="button" title="Logout" (click)="onLogout()">

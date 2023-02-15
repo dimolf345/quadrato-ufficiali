@@ -11,31 +11,20 @@ import { Officer } from '../../shared/models/officer.model';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  currentOfficer: Officer | null = null;
+export class HeaderComponent implements OnInit {
+  currentOfficer$: Observable<Officer | null> = new Observable();
   officerSub: Subscription = new Subscription();
 
   constructor(
     private store: Store<{ officers: OfficerState }>,
-    private auth: AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.officerSub = this.store
-      .select('officers')
-      .pipe(
-        map((state) => {
-          return state.currentOfficer;
-        })
-      )
-      .subscribe((x) => {
-        this.currentOfficer = x;
-      });
+    this.currentOfficer$ = this.store.select((s) => s.officers.currentOfficer);
   }
 
-  ngOnDestroy(): void {}
-
   onLogout() {
-    this.auth.logout();
+    this.authService.logout();
   }
 }

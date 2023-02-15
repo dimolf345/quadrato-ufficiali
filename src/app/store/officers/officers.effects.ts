@@ -1,28 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { OfficerService } from './../../services/officers.service';
-import * as fromOfficer from '../officers/officers.actions';
-import { catchError, map, mergeMap, of } from 'rxjs';
-import { SnackbarService } from 'src/app/services/snackbar.service';
+import * as fromOfficer from './officers.actions';
+import * as fromUI from '../ui/ui.actions';
+import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Injectable()
 export class OfficersEffects {
+  resetOfficer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromOfficer.resetCurrentOfficer),
+      map(() =>
+        fromOfficer.setCurrentOfficer({
+          officer: null,
+        })
+      )
+    )
+  );
+
   getLoggedOfficerProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromOfficer.getLoggedOfficer),
-      mergeMap((action) =>
+      switchMap((action) =>
         this.officerService.getOfficerByEmail(action.email).pipe(
           map((result) =>
             fromOfficer.setCurrentOfficer({
-              officer: result[0],
+              officer: this.authService.isAuthenticated.value
+                ? result[0]
+                : null,
             })
           ),
-          catchError((err) => {
-            this.snackbarService.defaultSnackBar(
-              (err as Error).message,
-              'error'
-            );
+          catchError((err: any) => {
             return of(
+              fromUI.showErrorMessage({
+                message: err.message,
+              }),
               fromOfficer.setCurrentOfficer({
                 officer: null,
               })
@@ -51,6 +64,6 @@ export class OfficersEffects {
   constructor(
     private actions$: Actions,
     private officerService: OfficerService,
-    private snackbarService: SnackbarService
+    private authService: AuthService
   ) {}
 }
